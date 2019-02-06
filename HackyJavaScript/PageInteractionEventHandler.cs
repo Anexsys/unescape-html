@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Runtime.InteropServices;
 using kCura.EventHandler;
 using kCura.EventHandler.CustomAttributes;
@@ -6,7 +6,7 @@ using kCura.Relativity.Client;
 using Relativity.API;
 using Relativity.Services.Objects;
 
-namespace HackyJavaScript
+namespace MachOneShim
 {
     [kCura.EventHandler.CustomAttributes.Description("My page interaction event handler")]
     [System.Runtime.InteropServices.Guid("fa6dcfa3-6507-4198-9c34-911f4da28aba")]

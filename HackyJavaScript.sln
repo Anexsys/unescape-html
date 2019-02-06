@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28010.2019
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HackyJavaScript", "HackyJavaScript\HackyJavaScript.csproj", "{FA6DCFA3-6507-4198-9C34-911F4DA28ABA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MachOneShim", "HackyJavaScript\MachOneShim.csproj", "{FA6DCFA3-6507-4198-9C34-911F4DA28ABA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
