@@ -26,7 +26,7 @@ namespace MachOneShim
 
             // js file compiled into string
             string htmlScript = $"<script type=\"text/javascript\">\n {javascripts.htmlscript} \n</script>";
-            this.RegisterClientScriptBlock(new kCura.EventHandler.ScriptBlock() { Key = "hackyPieh", Script = htmlScript });
+            this.RegisterStartupScriptBlock(new kCura.EventHandler.ScriptBlock() { Key = "hackyPieh", Script = htmlScript });
 
             //// call the function directly (at startup)
             //string callScript = "<script type=\"text/javascript\"> showHtml();</script>";
