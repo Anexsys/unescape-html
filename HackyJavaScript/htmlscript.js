@@ -151,13 +151,13 @@ function generateMachOneHtml(data) {
 
     var ajaxCall = `var postData = { workspaceID:  ${input.WorkspaceID}, documentID: ${input.DocumentID}, fieldType: ${input.FieldType}, destinationFieldID: ${input.DestinationFieldID}, sourceFieldID:${input.SourceFieldID}, value: n , choices: ${getChoices()} };
                             $.ajax({ type: "POST", url: "${customPageURL}", data: JSON.stringify(postData), contentType: "application/json" }).done(function() { $(${fieldHtmlID}).css("border","2px solid #00d103");}).fail(function() { $(${fieldHtmlID}).css("border","2px solid #cc0000");});`;
-    var onfocus = `$(${fieldHtmlID}).css("border","2px solid #0003cc");`
+    var onfocus = `$(${fieldHtmlID}).css("border","2px solid #0003cc");`;
 
     var onBlurYesNo = `var n=$(${fieldHtmlID}).is(":checked"); ${ajaxCall} $(${fieldHtmlID}).css("border","2px solid #efaa21");`;
     var onBlur = `(function(e) { var n=$(${fieldHtmlID}).val(); ${ajaxCall} $(${fieldHtmlID}).css("border","2px solid #efaa21"); })(event)`;
 
     var keydown = `(function (e) {   if(e.which === 38 || e.which === 40 || e.which === 39 || e.which === 37|| e.which === 69 || e.which === 190 || e.which === 32 || e.which === 187) {e.preventDefault();}    })(event)`;
-    var onKeyUp = `(function(e){var thisCell=$(${fieldHtmlID}).parent();var thisRow=thisCell.parent();if(e.which===38){var cellIndex=thisCell.index();var cellAbove=thisRow.prev("tr").children("td:nth-child("+(cellIndex+1)+")");cellAbove.find("input,select,.multichoice").focus();selectActiveRow(cellAbove.parent()[0]);}else if(e.which===39){var nextEl=thisCell.next();var tries=0;while(nextEl.find("input,select,.multichoice").length===0||tries<3){nextEl=nextEl.next();tries++;}nextEl.find("input,select,.multichoice").focus();}else if(e.which===37){var prevEl=thisCell.prev();var tries=0;while(prevEl.find("input,select,.multichoice").length===0||tries<3){prevEl=prevEl.prev();tries++;}prevEl.find("input,select,.multichoice").focus();}else if(e.which===40){var cellIndex=thisCell.index();var cellBelow=thisRow.next("tr").children("td:nth-child("+(cellIndex+1)+")");cellBelow.find("input,select,.multichoice").focus();selectActiveRow(cellBelow.parent()[0]);}})(event)`;
+    var onKeyUp = `(function(e){debugger; var thisCell=$(${fieldHtmlID}).parent();var thisRow=thisCell.parent();if(e.which===38){var cellIndex=thisCell.index();var cellAbove=thisRow.prev("tr").children("td:nth-child("+(cellIndex+1)+")");cellAbove.find("input,select,.multichoice").focus();selectActiveRow(cellAbove.parent()[0]);}else if(e.which===39){var nextEl=thisCell.next();var tries=0;while(nextEl.find("input,select,.multichoice").length===0&&tries<3){nextEl=nextEl.next();tries++;}nextEl.find("input,select,.multichoice").focus();}else if(e.which===37){var prevEl=thisCell.prev();var tries=0;while(prevEl.find("input,select,.multichoice").length===0&&tries<3){prevEl=prevEl.prev();tries++;}prevEl.find("input,select,.multichoice").focus();}else if(e.which===40){var cellIndex=thisCell.index();var cellBelow=thisRow.next("tr").children("td:nth-child("+(cellIndex+1)+")");cellBelow.find("input,select,.multichoice").focus();selectActiveRow(cellBelow.parent()[0]);}})(event)`;
 
     function getText() { if (input.Value === null) { return "" } else { return input.Value } };
 
@@ -186,27 +186,27 @@ function generateMachOneHtml(data) {
 
         case 8: // multiple choice
             var onclick = `(function (e){ var expanded=$('#${id} .checkbox').css('display'); if(expanded === 'none'){     $('#${id} .checkbox').css('display', 'block');} else { $('#${id} .checkbox').css('display', 'none'); }   })(event)`;
-            var onBlurMulti = `(function(e){ if (e.relatedTarget.className !="multichoice ${id}"){  $("#${id} .checkbox").css("display", "none");           var children=$("#${id} .checkbox").children(); var n = "";   for(let i=0; i< children.length; i++){  if(children[i].childNodes[1].checked){ if(i != 0 && n != ""){n +=";";}    var value = children[i].childNodes[1].value; n += value  } }          ${ajaxCall}$(${fieldHtmlID}).css("border", "2px solid #efaa21");}})(event)`;
+            var onBlurMulti = `(function(e){ if (e.relatedTarget.className !="multichoice ${id}"){  $("#${id} .checkbox").css("display", "none");           var children=$("#${id} .checkbox").children(); var n = "";   for(let i=0; i< children.length; i++){  if(children[i].childNodes[1].checked){ if(i != 0 && n != ""){n +=";";}    var value = children[i].childNodes[1].value; n += value  } } ${ajaxCall}$(${fieldHtmlID}).css("border", "2px solid #efaa21");}})(event)`;
             var keyDownMulti = `(function (e) {   if(e.which === 13) { var expanded=$("#${id} .checkbox").css("display"); if(expanded === "none"){     $("#${id} .checkbox").css("display", "block");} else { $("#${id} .checkbox").css("display", "none"); } } else{e.preventDefault();}   })(event)`;
 
             function setChecked(artifactID) {
                 var str = String(input.Value);
-                if (str.includes(`${artifactID}`)) { return "checked" } else { return "" };
+                if (str.includes(`${artifactID}`)) { return "selected" } else { return "" };
             }
 
 
             var multiChoiceOptions = "";
             for (let i = 0; i < input.Choices.length; i++) {
+                //multiChoiceOptions += `<option ${setChecked(input.Choices[i].ArtifactID)} value="${input.Choices[i].ArtifactID}">${input.Choices[i].Name}</option>`;
                 multiChoiceOptions += `<label class="multichoice ${id}" style="display: block; margin:0px 0px 5px 8px"> <input class="multichoice ${id}" onfocus="" onblur='${onBlurMulti}' style="margin-right: 5px;" type="checkbox" ${setChecked(input.Choices[i].ArtifactID)} value="${input.Choices[i].ArtifactID}"/>${input.Choices[i].Name}</label>`;
                 //value="${input.Choices.ArtifactID}"
             }
+            console.log("chosen here");
+            //<select class="chosen-select multichoice" multiple data-placeholder="placeholder lol">${multiChoiceOptions}</select>
             return `<div tabindex="0"  onfocus='${onfocus}' onblur='${onBlurMulti}'  onkeyup='${onKeyUp}' onkeydown='${keyDownMulti}' class='multichoice ${id}' id='${id}'    style="width: -webkit-fill-available; font-size:13.3333px; max-height:200px; overflow:auto; color:black; background-color:white;  line-height:normal;  border: solid rgb(169, 169, 169);  border-width:  1px;" ><p style="margin: 2.1px; -webkit-appearance: menulist;" onclick="${onclick}">Select Options:</p><div id='${id}' class="checkbox" style="display: none; margin-top: 8px;"">${multiChoiceOptions}</div></div>`;
     }
 
-
-
-
-
+    $('.chosen-select').chosen();
 }
 
 
@@ -229,7 +229,6 @@ function attachListenerTo(iFrame) {
 
 
 function hackyPiehStartup() {
-    console.log("this is a message");
     dockedFrame = top.document.getElementById(DOCKED_IFRAME_ID);
     undockedFrame = top.document.getElementById(UNDOCKED_IFRAME_ID);
     attachListenerTo(dockedFrame);
@@ -238,4 +237,7 @@ function hackyPiehStartup() {
 }
 
 hackyPiehStartup();
-console.log("this is another message");
+//$(window).load(function () {
+//    $(".chosen-select").chosen();
+//});
+$(document).ready(function () { console.log('hello chosen'); $('.chosen-select').chosen(); });

@@ -84,8 +84,7 @@ namespace MachOneShim {
         ///
         ///
         ///function getTableFrom(iframeElement) {
-        ///    if (iframeElement === null) {
-        /// [rest of string was truncated]&quot;;.
+        ///    if (iframeElement === null) {        /// [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string htmlscript {
             get {

@@ -8,7 +8,7 @@ using Relativity.Services.Objects;
 
 namespace MachOneShim
 {
-    [kCura.EventHandler.CustomAttributes.Description("My page interaction event handler")]
+    [kCura.EventHandler.CustomAttributes.Description("MachOne Page Interaction Event Handler")]
     [System.Runtime.InteropServices.Guid("fa6dcfa3-6507-4198-9c34-911f4da28aba")]
     public class PageInteractionEventhandler : kCura.EventHandler.PageInteractionEventHandler
     {
@@ -24,13 +24,17 @@ namespace MachOneShim
 
             int currentWorkspaceArtifactID = Helper.GetActiveCaseID();
 
+            this.RegisterLinkedClientScript("https://cdn.rawgit.com/harvesthq/chosen/gh-pages/chosen.jquery.min.js");
+            //this.RegisterClientScriptBlock(new ScriptBlock() { Key = "chosenJs", Script = $"<script type=\"text/javascript\">\n {javascripts.chosen_jquery_min} \n</script>" });
+            this.RegisterLinkedCss("https://cdn.rawgit.com/harvesthq/chosen/gh-pages/chosen.min.css");
+
             // js file compiled into string
             string htmlScript = $"<script type=\"text/javascript\">\n {javascripts.htmlscript} \n</script>";
             this.RegisterStartupScriptBlock(new kCura.EventHandler.ScriptBlock() { Key = "hackyPieh", Script = htmlScript });
 
-            //// call the function directly (at startup)
-            //string callScript = "<script type=\"text/javascript\"> showHtml();</script>";
-            //this.RegisterStartupScriptBlock(new kCura.EventHandler.ScriptBlock() { Key = "call", Script = callScript });
+            //this.RegisterStartupScriptBlock(new ScriptBlock() {
+            //    Key = "startChosen",
+            //    Script = @"<script type='text/javascript'> $(document).ready(function() { console.log('hello chosen'); $('.chosen-select').chosen(); }); </script>" });
 
             return retVal;
         }
